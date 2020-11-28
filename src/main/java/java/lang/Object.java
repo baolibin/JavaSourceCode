@@ -30,13 +30,17 @@ package java.lang;
  * Every class has {@code Object} as a superclass. All objects,
  * including arrays, implement the methods of this class.
  *
- * @author  unascribed
- * @see     java.lang.Class
- * @since   JDK1.0
+ * @author unascribed
+ * @see java.lang.Class
+ * @since JDK1.0
  */
 public class Object {
 
+    /**
+     * 对本地方法进行注册
+     */
     private static native void registerNatives();
+
     static {
         registerNatives();
     }
@@ -57,8 +61,11 @@ public class Object {
      * </p>
      *
      * @return The {@code Class} object that represents the runtime
-     *         class of this object.
+     * class of this object.
      * @jls 15.8.2 Class Literals
+     */
+    /**
+     * 返回一个对象的运行时类
      */
     public final native Class<?> getClass();
 
@@ -93,9 +100,12 @@ public class Object {
      * technique is not required by the
      * Java&trade; programming language.)
      *
-     * @return  a hash code value for this object.
+     * @return a hash code value for this object.
      * @see     java.lang.Object#equals(java.lang.Object)
      * @see     java.lang.System#identityHashCode
+     */
+    /**
+     * 返回该对象的哈希值
      */
     public native int hashCode();
 
@@ -144,6 +154,9 @@ public class Object {
      *          argument; {@code false} otherwise.
      * @see     #hashCode()
      * @see     java.util.HashMap
+     */
+    /**
+     * 指示某个其他对象是否与此对象相等
      */
     public boolean equals(Object obj) {
         return (this == obj);
@@ -201,13 +214,16 @@ public class Object {
      * whose class is {@code Object} will result in throwing an
      * exception at run java.time.
      *
-     * @return     a clone of this instance.
-     * @throws  CloneNotSupportedException  if the object's class does not
+     * @return a clone of this instance.
+     * @throws CloneNotSupportedException  if the object's class does not
      *               support the {@code Cloneable} interface. Subclasses
      *               that override the {@code clone} method can also
      *               throw this exception to indicate that an instance cannot
      *               be cloned.
      * @see java.lang.Cloneable
+     */
+    /**
+     * 本地clone方法，用于对象的复制
      */
     protected native Object clone() throws CloneNotSupportedException;
 
@@ -230,7 +246,10 @@ public class Object {
      * getClass().getName() + '@' + Integer.toHexString(hashCode())
      * </pre></blockquote>
      *
-     * @return  a string representation of the object.
+     * @return a string representation of the object.
+     */
+    /**
+     * 返回该对象的字符串表示
      */
     public String toString() {
         return getClass().getName() + "@" + Integer.toHexString(hashCode());
@@ -263,10 +282,13 @@ public class Object {
      * <p>
      * Only one thread at a java.time can own an object's monitor.
      *
-     * @throws  IllegalMonitorStateException  if the current thread is not
+     * @throws IllegalMonitorStateException  if the current thread is not
      *               the owner of this object's monitor.
      * @see        java.lang.Object#notifyAll()
      * @see        java.lang.Object#wait()
+     */
+    /**
+     * 唤醒在此对象监视器上等待的单个线程
      */
     public final native void notify();
 
@@ -287,10 +309,13 @@ public class Object {
      * description of the ways in which a thread can become the owner of
      * a monitor.
      *
-     * @throws  IllegalMonitorStateException  if the current thread is not
+     * @throws IllegalMonitorStateException  if the current thread is not
      *               the owner of this object's monitor.
      * @see        java.lang.Object#notify()
      * @see        java.lang.Object#wait()
+     */
+    /**
+     * 唤醒在此对象监视器上等待的所有线程
      */
     public final native void notifyAll();
 
@@ -367,17 +392,20 @@ public class Object {
      * a monitor.
      *
      * @param      timeout   the maximum java.time to wait in milliseconds.
-     * @throws  IllegalArgumentException      if the value of timeout is
+     * @throws IllegalArgumentException      if the value of timeout is
      *               negative.
-     * @throws  IllegalMonitorStateException  if the current thread is not
+     * @throws IllegalMonitorStateException  if the current thread is not
      *               the owner of the object's monitor.
-     * @throws  InterruptedException if any thread interrupted the
+     * @throws InterruptedException if any thread interrupted the
      *             current thread before or while the current thread
      *             was waiting for a notification.  The <i>interrupted
      *             status</i> of the current thread is cleared when
      *             this exception is thrown.
      * @see        java.lang.Object#notify()
      * @see        java.lang.Object#notifyAll()
+     */
+    /**
+     * 导致当前的线程等待，直到其它线程调用此对象的notify()或notifyAll()，或者已超过某个实际时间量
      */
     public final native void wait(long timeout) throws InterruptedException;
 
@@ -432,16 +460,19 @@ public class Object {
      * @param      timeout   the maximum java.time to wait in milliseconds.
      * @param      nanos      additional java.time, in nanoseconds range
      *                       0-999999.
-     * @throws  IllegalArgumentException      if the value of timeout is
+     * @throws IllegalArgumentException      if the value of timeout is
      *                      negative or the value of nanos is
      *                      not in the range 0-999999.
-     * @throws  IllegalMonitorStateException  if the current thread is not
+     * @throws IllegalMonitorStateException  if the current thread is not
      *               the owner of this object's monitor.
-     * @throws  InterruptedException if any thread interrupted the
+     * @throws InterruptedException if any thread interrupted the
      *             current thread before or while the current thread
      *             was waiting for a notification.  The <i>interrupted
      *             status</i> of the current thread is cleared when
      *             this exception is thrown.
+     */
+    /**
+     * 导致当前的线程等待，直到其他线程调用此对象的notify()或notifyAll()，或其他某个线程中断当前线程，或者已超过某个实际时间量
      */
     public final void wait(long timeout, int nanos) throws InterruptedException {
         if (timeout < 0) {
@@ -450,7 +481,7 @@ public class Object {
 
         if (nanos < 0 || nanos > 999999) {
             throw new IllegalArgumentException(
-                                "nanosecond timeout value out of range");
+                    "nanosecond timeout value out of range");
         }
 
         if (nanos > 0) {
@@ -488,15 +519,18 @@ public class Object {
      * description of the ways in which a thread can become the owner of
      * a monitor.
      *
-     * @throws  IllegalMonitorStateException  if the current thread is not
+     * @throws IllegalMonitorStateException  if the current thread is not
      *               the owner of the object's monitor.
-     * @throws  InterruptedException if any thread interrupted the
+     * @throws InterruptedException if any thread interrupted the
      *             current thread before or while the current thread
      *             was waiting for a notification.  The <i>interrupted
      *             status</i> of the current thread is cleared when
      *             this exception is thrown.
      * @see        java.lang.Object#notify()
      * @see        java.lang.Object#notifyAll()
+     */
+    /**
+     * 导致当前的线程等待，直到其它线程调用此对象的notify()或notifyAll()
      */
     public final void wait() throws InterruptedException {
         wait(0);
@@ -552,5 +586,9 @@ public class Object {
      * @see java.lang.ref.PhantomReference
      * @jls 12.6 Finalization of Class Instances
      */
-    protected void finalize() throws Throwable { }
+    /**
+     * 当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法
+     */
+    protected void finalize() throws Throwable {
+    }
 }
