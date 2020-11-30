@@ -46,5 +46,9 @@ class Void {
     /*
      * The Void class cannot be instantiated.
      */
+
+    /**
+     * 空类不能实例化
+     */
     private Void() {}
 }
