@@ -56,6 +56,10 @@ import sun.reflect.annotation.AnnotationType;
  * @author  unascribed
  * @since   JDK1.0
  */
+
+/**
+ * System代表程序所在系统，提供了一些系统属性和系统操作。
+ */
 public final class System {
 
     /* register the natives via the static initializer.
@@ -966,6 +970,10 @@ public final class System {
      *        if a java.security manager exists and its <code>checkExit</code>
      *        method doesn't allow exit with the specified status.
      * @see        java.lang.Runtime#exit(int)
+     */
+    /**
+     * 终止当前系统正在运行的Java程序。
+     * @param status
      */
     public static void exit(int status) {
         Runtime.getRuntime().exit(status);
