@@ -31,6 +31,7 @@ import java.util.function.Function;
 import java.io.Serializable;
 
 /**
+ * Map是一个键值接口，一个map不能有重复的Key，每个key至多映射一个value
  * An object that maps keys to values.  A map cannot contain duplicate keys;
  * each key can map to at most one value.
  *
@@ -130,6 +131,7 @@ public interface Map<K,V> {
     // Query Operations
 
     /**
+     * 键值对个数
      * Returns the number of key-value mappings in this map.  If the
      * map contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
      * <tt>Integer.MAX_VALUE</tt>.
@@ -739,6 +741,7 @@ public interface Map<K,V> {
      * @since 1.8
      */
     default V putIfAbsent(K key, V value) {
+        // 如果map中key对应的值为空，则直接添加，否则不覆盖添加
         V v = get(key);
         if (v == null) {
             v = put(key, value);
